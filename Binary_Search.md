@@ -29,3 +29,9 @@ else if (arr[mid] > target) hi = mid-1
 else if(arr[mid] == target) flag = true; break;
 }
 ```
+
+
+# Time Complexity analysis
+T.C = O(log n)
+
+***Note-> mid = lo + (hi-lo)/2;***
