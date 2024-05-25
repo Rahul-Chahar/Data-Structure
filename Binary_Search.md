@@ -1,4 +1,4 @@
-#Binary Search
+# Binary Search
 1-> It is used to seach a given element in a sorted space(array)
 
 2-> imp
