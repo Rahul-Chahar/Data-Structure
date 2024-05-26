@@ -82,3 +82,28 @@ Method -1st---
 * find lb
 * find up
 
+
+
+Q-> Peak index in a Mountain Array
+
+arr = {10,20,30,50,40,20,,4}
+
+**Note --> first or last element toh kabhi peak hou nahi sakte**
+
+peak = 3
+
+1st Method --> Linear Search
+```
+if(arr[i] > arr[i-1] && arr[i]> arr[i+1]
+return i
+```
+
+2nd Method ---> Binary Search
+```
+int lo = 1, hi = n-2;
+
+if(arr[mid] > arr[mid-1] && arr[mid] > arr[mid+1] return mid;
+else if(arr[mid] > arr[mid-1] && arr[mid] < arr[mid+1]   lo = mid+1;
+else if (arr[mid] < arr[mid-1] && arr[mid] > arr[mid+1]  hi = mid-1;
+```
+
