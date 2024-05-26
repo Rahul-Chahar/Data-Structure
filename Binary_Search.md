@@ -31,7 +31,54 @@ else if(arr[mid] == target) flag = true; break;
 ```
 
 
+
 # Time Complexity analysis
 T.C = O(log n)
 
 ***Note-> mid = lo + (hi-lo)/2;***
+
+
+### Lower bound
+Q-> Given a sorted integer array and an integer 'x', find the lower bound of x.
+
+**Smallest idx such that arr[idx]>=x**
+
+arr={10,20,30,40,50,60,70}
+
+* x=40 => lb =4
+* x=30 => lb =2
+* x=35 => lb =4
+* x=25 => lb =2
+* x=80 => lb =8
+* x=5  => lb =0
+
+
+### Upper bound
+Q-> Given a sorted integer array and an integer 'x', find the upper bound of x.
+
+**Ub is the minimum idx such that arr[idx] > x**
+
+arr = {10,20,30,30,40,50,60,70}
+
+* x =30 || lb = 2 || ub = 4
+* x =35 || lb = 4 || ub = 4
+* x =5  || lb = 0 || ub = 0
+* x =80 || lb = 8 || lb = 8
+
+
+Q-> Find the first and last position of the element in a sorted array.
+
+arr = {10,10,20,20,20,20,30,30,30,40,40}
+
+x = 20
+
+fp = 2
+
+lp = 6 
+
+Method -1st---
+* Step's ->
+* Check if the element is present or not
+* find lb
+* find up
+
