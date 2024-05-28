@@ -107,3 +107,20 @@ else if(arr[mid] > arr[mid-1] && arr[mid] < arr[mid+1]   lo = mid+1;
 else if (arr[mid] < arr[mid-1] && arr[mid] > arr[mid+1]  hi = mid-1;
 ```
 
+
+## Search in rotated array
+arr = 3,4,5,6,7,0,1,2
+
+Method -1 --> Find the pivot index.
+
+p -> pivot --> pivot largest element hi houga.
+
+* Hint
+  ```
+  int p;
+  if(arr[m] > arr[m-1] && arr[m] > arr[m+1]) p = mid; break;
+   else if(arr[m] < arr[m-1] && arr[m] < arr[m+1]) p = mid-1; break;
+   else if(arr[m] > arr[m-1] && arr[m] < arr[m+1]){
+     if(arr[m] > arr[n-1]) lo = mid+1;
+  else hi = mid -1;
+```
