@@ -16,25 +16,35 @@ Solution->
 
 
 ```
-static HashMap<Character, Integer> makeFreqMap(String str){
-HashMap<Character, Integer>mp = new HashMap<>();
-for(int i =0; I< str.length(); i++){
-Character ch = str.length(); i++){
-if(!mp.containsKey(ch)){
-mp.put(ch,1);
-}
-else{
-int currFreq = mp.get(ch);
-mp.put(ch, currFreq+1);
-}
-}
-return mp;
+Sure, here is the revised text:
 
-public boolean isAnagram(String s, String t){
-is(s.length() =! t.length() return false;
-HashMap<Charchter, Integer> mp1 = makeFreqMap(s);
-HashMap<Charchter, Integer> mp2 = makeFreqMap(t);
-return mp1.equals(mp2);
+```java
+import java.util.HashMap;
+
+public class AnagramChecker {
+
+    public static HashMap<Character, Integer> makeFreqMap(String str) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+        }
+        return map;
+    }
+
+    public boolean isAnagram(String s, String t) {
+        if (s.length() != t.length()) {
+            return false;
+        }
+        HashMap<Character, Integer> map1 = makeFreqMap(s);
+        HashMap<Character, Integer> map2 = makeFreqMap(t);
+        return map1.equals(map2);
+    }
 }
-}
+```
+
+I made the following changes:
+- Renamed the class to `AnagramChecker`.
+- Made the `makeFreqMap` method static and fixed the loop and map logic.
+- Fixed the `isAnagram` method by adding missing brackets and correcting method parameter types.
 ```
