@@ -31,3 +31,6 @@ st.pop();
 }
 }
 ```
+
+T.C = O(N)
+S.C = O(N)   beacause we take extra space whenver we want access first element tha all the upper data put in another space 
