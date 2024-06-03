@@ -317,3 +317,147 @@ public class Array_ArrayList_Implementation {
     }
 }
 ```
+
+
+## Q->7 LinkedList Implementation of Stack
+```
+public class LinkedList_Implementation_of_Stack {
+    public static class Node
+    {
+        int val;
+        Node next;
+        Node(int val)
+        {
+            this.val = val;
+            this.next = null;
+        }
+    }
+    public static class Stack{
+        Node head = null;
+        int size = 0;
+        void push(int x)
+        {
+            Node temp = new Node(x);
+            temp.next = head;
+            head = temp;
+            size++;
+        }
+        int size()
+        {
+            return size;
+        }
+        int pop()
+        {
+            if(head == null)
+            {
+                System.out.println("Stack is empty");
+                return -1;
+            }
+            int x = head.val;
+            head = head.next;
+            size--;
+            return x;
+        }
+        int peek()
+        {
+            if(head == null)
+            {
+                System.out.println("Stack is empty");
+                return -1;
+            }
+            int x = head.val;
+            return x;
+        }
+
+        boolean isEmpty()
+        {
+            if(size == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        void display()
+        {
+            displayRec(head);
+        }
+
+        void displayRec(Node h)
+        {
+            if(h == null) return;
+
+            displayRec(h.next);
+            System.out.print(h.val + " ");
+        }
+    }
+
+    public static void main(String[] args) {
+        Stack st = new Stack();
+        st.push(10);
+        st.push(20);
+        st.push(30);
+        st.push(40);
+        System.out.println(st.peek());
+        System.out.println(st.size());
+        System.out.println(st.pop());
+        System.out.println(st.size());
+        st.display();
+        System.out.println(st.isEmpty());
+    }
+}
+```
+
+# Problems
+### Q1-> Balanced Brackets
+```
+() -> True
+()[]{} -> True
+[(){}] -> True
+][ -> False
+(} -> False
+(){] -> False
+```
+
+*Note -> Agar kahi bhi close bracket mil gaya hai toh ye confirm hai ki ouse phele ouska opening jarur houga agar ouska opening nahi mil raha hai mtlv gadbhad hai
+for eg->
+][ -> False*
+
+
+#### Algo:-
+* Intialise an empty stack
+* Traverse the input string character by character.
+* If the current char is an open bracket ( (,{,[ ) push it on the stack
+* If the current char is closing bracket ( ),},} ) check the stack if the stack is empty, return false, otherwise pop the element from the stack & check if it is the matches current closing bracket. of if doesn't match return false: it is not valid parathesis
+
+
+```
+import java.util.Stack;
+
+public class Balanced_Brackets {
+    public boolean isValid(String s) {
+        Stack<Character> st = new Stack<>();
+
+        for (char c : s.toCharArray()) {
+            if (c == '(')
+                st.push(')');
+            else if (c == '{')
+                st.push('}');
+            else if (c == '[')
+                st.push(']');
+            else if (st.isEmpty() || st.pop() != c)
+                return false;
+        }
+        return st.isEmpty();
+    }
+
+    public static void main(String[] args) {
+        Balanced_Brackets obj = new Balanced_Brackets();
+        String s = "({[]})";
+        if (obj.isValid(s)) {
+            System.out.println("Balanced");
+        } else {
+            System.out.println("Not Balanced");
+    }
+    }
+```
