@@ -461,3 +461,58 @@ public class Balanced_Brackets {
     }
     }
 ```
+
+T.C = O(N)
+
+S.C = O(M)
+
+
+### Q2-> Remove Consecutive Duplicates in string
+
+```
+eg->
+1-> aaabbb --->  ab
+2-> geeks for geeks ---> geks for geks
+3-> aabccba  ---> abcba
+4-> aba ---> aba
+5-> aaabbbb ---> a
+
+```
+
+Algo-->
+* Create a stack of characters
+* see each character of the string one by one.
+  * If the stack is not empty & character on top of the stack matches a current character, it is a duplicate pop of the character from the top of the stack.
+  * Otherwise push the char on the stack.
+* Create a StringBuilder & pop elements from the stack & append to the StringBuilder and reverse the StringBuilder and return the string.
+
+```
+public class remove_consecutive_Duplicates {
+
+    public  String removeDuplicates(String s){
+        Stack<Character> st = new Stack<>();
+        for(char c : s.toCharArray())
+        {
+            if(!st.isEmpty() && st.peek() == c)
+            {
+                st.pop();
+            }
+            else {
+                st.push(c);
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        while(!st.isEmpty())
+        {
+            sb.append(st.pop());
+        }
+        return sb.reverse().toString();
+    }
+
+    public static void main(String[] args) {
+        remove_consecutive_Duplicates obj = new remove_consecutive_Duplicates();
+        String s = "abbaca";
+        System.out.println(obj.removeDuplicates(s));
+    }
+}
+```
