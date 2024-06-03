@@ -33,6 +33,7 @@ st.pop();
 ```
 
 T.C = O(N)
+
 S.C = O(N)   because we take extra space whenever we want to access the first element that all the upper data put in another space 
 
 
@@ -81,6 +82,7 @@ public class reverse_Stack {
 ```
 
 T.C = O(N)
+
 S.C = O(N)
 
 
@@ -117,6 +119,7 @@ public class copy_Stack_into_another_Stack_in_same_order {
 }
 ```
 T.C = O(N)
+
 S.C = O(N)
 
 
@@ -212,6 +215,7 @@ public class any_index {
 }
 ```
 T.C = O(N)
+
 S.C = O(N)
 
 
@@ -244,6 +248,7 @@ public class reverse_statck_recursively {
 }
 ```
 T.C -> O(N)
+
 S.C -> O(N)
 
 
@@ -516,3 +521,268 @@ public class remove_consecutive_Duplicates {
     }
 }
 ```
+
+
+### Q3-> Next greater element
+```
+    [1,2,3,4]
+Ans [3,4,4,-1]
+
+    [7,5,8,3,5]
+Ans [8,8,-1,5,-1]
+
+```
+Brute Force--:
+* Initialise an answer array with all elements -1 (res)
+* Run an outer loop from 0 to n-1 (i), Run an inner loop for i+1 to n-1 (j), and in each iteration if arr[j]>arr[i]  res[i] = arr[j]
+* Return res array
+
+T.C -> O(N square)
+S.C -> O(1)
+
+
+Optimize--:
+* Create an empty stack.
+* Run a loop from end to start (n-1 to 0), While the element at the top of the stack is <= the current element pop it from the stack
+* Otherwise if the element at the top > current element, update the answer.
+*  if the stack is empty, update ans as -1.
+*  Push the current element on the stack.
+
+```
+import java.util.Stack;
+
+public class next_greater_element {
+
+    public static long[] nextLargestElement(long[] arr, int n)
+    {
+        long[] output = new long[n];
+        output[n-1] = -1;
+
+        Stack<Long> st = new Stack<>();
+        st.push(arr[n-1]);
+
+        for(int i = n-2; i>=0; i--)
+        {
+            while(!st.isEmpty() && st.peek() <= arr[i])
+            {
+                st.pop();
+            }
+            output[i] = st.isEmpty() ? -1 : st.peek();
+            st.push(arr[i]);
+        }
+        return output;
+    }
+
+    public static void main(String[] args) {
+        long[] arr = {1, 3, 2, 4};
+        int n = arr.length;
+        long[] output = nextLargestElement(arr, n);
+        for(long i : output)
+        {
+            System.out.print(i + " ");
+        }
+    }
+}
+```
+T.C = O(N)
+
+S.C = O(N)
+
+
+### Q4-> Previous greater element
+```
+eg-1 {10,4,2,20,40,12,30}
+o/p  {-1,10,4,-1,-1,40,40}
+
+eg-2 {10,20,30,40}
+o/p  {-1,-1,-1,-1}
+```
+Algo->
+* Create a stack
+* ans[0] = -1
+* push arr[0] in stack
+* where seeing current element, we see the top of stack & pop element <= current element
+* if stack becomes empty , ans = -1 otherwise ans = top of the stack
+* Push the current element in the stack.
+
+```
+import java.util.Stack;
+
+public class previous_greater_element {
+    public static void main(String[] args){
+        int[] arr ={10,4,5,12,30};
+
+        int n = arr.length;
+        prevGreater(arr, n);
+    }
+    public static void prevGreater(int[] arr, int n)
+    {
+
+        Stack<Integer> st = new Stack<>();
+        st.push(arr[0]);
+        System.out.print(-1 + " ");
+
+        for(int i = 1; i<n; i++)
+        {
+            while(!st.isEmpty() && st.peek() <= arr[i])
+            {
+                st.pop();
+            }
+            if(st.isEmpty())
+                System.out.print(-1 + " ");
+            else
+                System.out.print(st.peek() + " ");
+            st.push(arr[i]);
+        }
+    }
+}
+```
+T.C = O(N)
+
+S.C = O(N)
+
+### Q5-> Stock Span problem
+```
+input - {100,80,60,70,60,75,85}
+Output -{1  ,1 ,1 ,2 ,1 ,4 ,6}
+
+input - {10,4,5,90,120,80}
+Output -{1 ,1,2,4 ,5  ,1}
+```
+
+Brute Force-:
+* For every element being visited, traverse element on the left of it and increment the span while the element on the left side is smaller.
+
+```
+public class Main{
+public static void main(String [] args){
+int price [] = {10,4,5,90,120,80};
+int n = price.length;
+int s[] = new int[n];
+
+calculateSpan(price, n, s);
+printArray(s);
+}
+static void calculateSpan(int[] price, int n, int[] s)
+{
+s[0] = 1;
+for(int j = i-1; j >= 0 && (price[i] >= price[j]); j--)
+s[i]++;
+}
+}
+static void printArray(int[] arr)
+{
+System.out.println(Arrays.toString(arr));
+}
+}
+```
+
+T.C = O(N square)
+
+S.C = O(1)
+
+Optimize ->
+* Create a stack & push 0 in it.
+* set the answer of the day 1 as 1 and run a loop
+* while the stack is not empty and the price of st.top <= price of the current day, pop out the stack top
+* set ans of the current day, if the stack is empty i+1, or else i-st.top()
+* push the current day in the stack
+* print ans
+
+```
+import java.util.Stack;
+public class stock_span_Problem {
+    public static int[] calculateSpan(int price[], int n)
+    {
+        int [] arr = new int[n];
+
+        Stack<Integer> st = new Stack<>();
+        st.push(0);
+        for(int i = 0; i<n; i++)
+        {
+            while(!st.isEmpty() && price[i] >= price[st.peek()])
+            {
+                st.pop();
+            }
+            arr[i] = st.isEmpty() ? i+1 : i - st.peek();
+            st.push(i);
+        }
+        return arr;
+    }
+    public static void main(String[] args) {
+        int price[] = {10, 4, 5, 90, 120, 80};
+        int n = price.length;
+        int[] output = calculateSpan(price, n);
+        for(int i : output)
+        {
+            System.out.print(i + " ");
+        }
+    }
+}
+```
+T.C = O(N)
+
+S.C = O(N)
+
+
+### Q6-> Largest Rectangle in Histogram
+(RSE - LSE+1)*height
+
+Right smallest element
+
+```
+import java.util.Stack;
+
+public class largest_rectangle_Histogram {
+    public int largestRectangleArea(int [] height){
+        int n = height.length;
+        Stack<Integer> st = new Stack<>();
+
+        int[] leftSmall = new int[n];
+        int[] rightSmall = new int[n];
+
+        for(int i = 0; i<n; i++)
+        {
+            while(!st.isEmpty() && height[st.peek()] >= height[i])
+            {
+                st.pop();
+            }
+            if(st.isEmpty())
+                leftSmall[i] = 0;
+            else
+                leftSmall[i] = st.peek() + 1;
+            st.push(i);
+        }
+        while (!st.isEmpty())
+        {
+            st.pop();
+        }
+        for(int i = n-1; i>=0; i--)
+        {
+            while(!st.isEmpty() && height[st.peek()] >= height[i])
+            {
+                st.pop();
+            }
+            if(st.isEmpty())
+                rightSmall[i] = n-1;
+            else
+                rightSmall[i] = st.peek() - 1;
+            st.push(i);
+        }
+        int maxArea = 0;
+        for(int i = 0; i<n; i++)
+        {
+            maxArea = Math.max(maxArea, height[i] * (rightSmall[i] - leftSmall[i] + 1));
+        }
+        return maxArea;
+    }
+    public static void main(String[] args) {
+        int[] height = {2,1,5,6,2,3};
+        largest_rectangle_Histogram obj = new largest_rectangle_Histogram();
+        System.out.println(obj.largestRectangleArea(height));
+    }
+}
+```
+T.C = O(N)
+
+S.C = O(N)
