@@ -124,3 +124,6 @@ p -> pivot --> pivot largest element hi houga.
      if(arr[m] > arr[n-1]) lo = mid+1;
   else hi = mid -1;
 ```
+
+11🕚
+11:11
