@@ -788,4 +788,71 @@ T.C = O(N)
 S.C = O(N)
 
 
-Repeated once more 
+### Q--> LeetCode: Decode String
+```
+3[a]2[bc]
+aaabcbc
+
+3[a2[c]]
+accaccacc
+
+2[a3[c2[x]]y]
+2[a3[cxx]y]
+2[acxxcxxcxxy]
+acxxcxxcxxyacxxcxxcxxy
+
+
+Finding An Optimal Solution
+1-> Find the first closing bracket
+2-> After that go back and find the first opening bracket
+
+// if we get a number
+push the number in numberStack
+
+// if we get anything else than a "]"
+push the character in stringStack
+
+// if we get a "["
+start popping from stringStack till "["
+
+pop from numberStack and create a repeated string
+
+push the repeated string in stringStack
+```
+
+
+
+### Q1-> Number of people visible in a queue
+Algo-->
+* You can see the next right greater element, Your next left greater element can see you
+* we create a stack & push indices on the stack.
+* each time we see a new element, we see the height at the index which is the top of the stack. (A)
+* if A < E, the current element is taller, so we have to update ans of A by +1.  (E current element)
+* & since the current element is taller, it will block all further elements for the top of a stack element, so its ans is final & we can pop it from the stack
+* we keep doing this until the top of the stack index height is less than the current element.
+* if stack is empty, it means we don't have any left greater element for the current element.
+* if the stack is not empty, it means the current element has the next left greater element & it can see it so we need to update ans for the stack top element
+
+```
+public class Number_of_people_visible_queue {
+    public int [] canSeePersonsCount(int [] heights){
+        int n = heights.length;
+        int [] res = new int[n];
+        Stack<Integer> stack = new Stack<>();
+        for(int i = 0; i < n; i++){
+            while(!stack.isEmpty() && heights[stack.peek()] < heights[i]){
+                res[stack.peek()]++;
+                stack.pop();
+            }
+            if(!stack.isEmpty()){
+                res[stack.peek()]++;
+            }
+            stack.push(i);
+        }
+        return res;
+    }
+}
+```
+T.C = O(N)
+
+S.C = O(N)
