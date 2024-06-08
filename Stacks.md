@@ -795,31 +795,75 @@ aaabcbc
 
 3[a2[c]]
 accaccacc
-
-2[a3[c2[x]]y]
-2[a3[cxx]y]
-2[acxxcxxcxxy]
-acxxcxxcxxyacxxcxxcxxy
-
-
-Finding An Optimal Solution
-1-> Find the first closing bracket
-2-> After that go back and find the first opening bracket
-
-// if we get a number
-push the number in numberStack
-
-// if we get anything else than a "]"
-push the character in stringStack
-
-// if we get a "["
-start popping from stringStack till "["
-
-pop from numberStack and create a repeated string
-
-push the repeated string in stringStack
 ```
+Algo ->
+* Create a character stack
+* Keep pushing the character in the stack until you find ']'
+* if you find ']', then keep popping the character until you find '[', this is how we get substring which is to be repeated.
+* Remove '['
+* Now we need to find number k (number of times substring needs to be repeated)
+* Find this number K
+* Put back the string K times in the stack
+* At last, pop from the stack & display in the result.
+```
+public class decode_String {
+    public String decodeString(String s) {
+        Stack<Character> st = new Stack<>();
+        for(char ch : s.toCharArray())
+        {
+            if(ch != ']')
+                st.push(ch);
+            else
+            {
+                // get the substring
+                StringBuilder sb = new StringBuilder();
+                while(st.peek() != '[')
+                {
+                    sb.append(st.pop());
+                }
 
+                // remove '['
+                st.pop();
+
+                // now get the number
+
+                int k = 0;
+                int base = 1;
+
+                while(!st.isEmpty() && Character.isDigit(st.peek()))
+                {
+                    k = k + (st.pop() - '0') * base;
+                    base *= 10;
+                }
+
+                while(k-- > 0)
+                {
+                    for(int i = sb.length() - 1; i >= 0; i--)
+                    {
+                        st.push(sb.charAt(i));
+                    }
+                }
+            }
+        }
+        char [] result = new char[st.size()];
+        for(int i = result.length - 1; i >= 0; i--)
+        {
+            result[i] = st.pop();
+        }
+        return new String(result);
+    }
+
+    public static void main(String[] args) {
+        decode_String obj = new decode_String();
+        String s = "3[a]2[bc]";
+        System.out.println(obj.decodeString(s));
+    }
+}
+
+T.C = O(N square)
+S.C = O(N)
+
+```
 
 
 ### Q1-> Number of people visible in a queue
@@ -955,5 +999,49 @@ public class min_Stack {
 }
 
 T.C = O(1)
+S.C = O(N)
+```
+
+
+### Q-> Valid Stack Sequences
+```
+eg->
+pushed = [1,3,2]
+popped = [2,1,3]
+Not a valid stack sequence (False)
+
+pushed = [1,2,3,4,5]
+popped = [4,5,3,2,1]
+Valid Stack Sequence (True)
+
+pushed = [1,2,3,4,5]
+popped = [4,3,5,1,2]
+Not a valid stack sequence (False)
+```
+Algorithm->
+* we see values in pushed  array each time we see a value, we push it in a stack
+* we compare if top of stack matches values in popped. Till it matches, we keep on removing values from stack & keep incrementing pointer of popped.
+* At the end, it stack is empty, we return true, else we return false.
+
+```
+public class valid_stack_sequences {
+    public boolean validateStackSequences(int[] pushed, int[] popped) {
+        Stack<Integer> st = new Stack<>();
+        int j = 0; // pointer for popped array
+
+        for(int val : pushed)
+        {
+            st.push(val);
+            while(!st.isEmpty() && st.peek() == popped[j])
+            {
+                st.pop();
+                j++;
+            }
+        }
+        return st.isEmpty();
+    }
+}
+
+T.C = O(N)
 S.C = O(N)
 ```
