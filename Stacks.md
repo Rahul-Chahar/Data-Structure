@@ -912,3 +912,48 @@ public class min_Stack {
 T.C = O(1)
 S.C = O(N) + O(N)  => O(N)
 ```
+
+### Approach 2: Using 1 Stack
+* we are not maintaining a min stack but there should be some way we need to maintain the minimum
+* Push(x) : we push x on the  stack if x <= current min,
+* we push the current min again on the stack
+* Why?
+* because let's say sometimes we pop the current element which is now the current min, that time we will have to update the current min so, we maintain 2nd min every time
+* Pop() -> If pop is removing current minimum, we pop twich & change current min to 2nd min value
+
+```
+public class min_Stack {
+  int min;
+    Stack<Integer> st;
+
+    public min_Stack() {
+        st = new Stack<>();
+        min = Integer.MAX_VALUE;
+    }
+
+    public void push(int val) {
+        if (val <= min) {
+            st.push(min);
+            min = val;
+        }
+        st.push(val);
+    }
+
+    public void pop() {
+        if (st.pop() == min) {
+            min = st.pop();
+        }
+    }
+
+    public int top() {
+        return st.peek();
+    }
+
+    public int getMin() {
+        return min;
+    }
+}
+
+T.C = O(1)
+S.C = O(N)
+```
