@@ -858,5 +858,57 @@ T.C = O(N)
 S.C = O(N)
 
 
+### Q--> Min Stack
+Approach 1: Using 2 Stacks
+* Create 2 stacks -- First is the main stack, Second is the min stack for maintaining a min element
+* Push(x)
+  * Push x in the main stack
+  * if the min stack is empty or less than the current min, we will push x in the min stack
+* Pop
+  * Pop the value from the main stack
+  * if the value is equal to the current min, remove this value from the min stack also
+* Min()->
+  * If min Stack is empty return -1
+  * otherwise return min-peak()
+```
+public class min_Stack {
 
-Do ASAP 
+    Stack<Integer> s;
+    Stack<Integer> min;
+
+    public min_Stack() {
+        s = new Stack<>();
+        min = new Stack<>();
+    }
+
+    public void push(int val) {
+        s.push(val);
+        if(min.isEmpty() ||  min.peek() >= s.peek()){
+            min.push(val);
+        }
+    }
+    public void pop() {
+        if(!s.isEmpty()){
+            int val = s.pop();
+            if(min.peek() == val){
+                min.pop();
+            }
+        }
+    }
+    public int top() {
+        if(s.isEmpty()){
+            return -1;
+        }
+        return s.peek();
+    }
+    public int getMin() {
+        if(min.isEmpty()){
+            return -1;
+        }
+        return min.peek();
+    }
+}
+
+T.C = O(1)
+S.C = O(N) + O(N)  => O(N)
+```
