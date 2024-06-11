@@ -182,3 +182,109 @@ Output
 [10, 30, 50]
 ```
 
+### Q1- Array implementation
+
+```
+package Queue;
+
+public class array_implementation {
+    public static class Que
+    {
+        int f = -1;
+        int r = -1;
+        int size = 0;
+        int [] arr = new int[5];
+
+        public void add(int val)
+        {
+            if(r == arr.length - 1)
+            {
+                System.out.println("Queue is full");
+                return;
+            }
+            if( f == -1 && r == -1)
+            {
+                f = r = 0;
+                arr[r] = val;
+            }
+            else
+            {
+                arr[++r] = val;
+            }
+            size++;
+        }
+        public int remove()
+        {
+            // Check underflow condition
+            if(size == 0)
+            {
+                System.out.println("Queue is empty");
+                return -1;
+            }
+            int val = arr[f++];
+            size--;
+            return val;
+        }
+        public int peek()
+        {
+            if(size == 0)
+            {
+                System.out.println("Queue is empty");
+                return -1;
+            }
+            return arr[f];
+        }
+        public boolean isEmpty()
+        {
+            if(size == 0)
+                return true;
+            return false;
+        }
+        public void display()
+        {
+            if(size == 0)
+            {
+                System.out.println("Queue is empty");
+
+            }
+            else {
+                for (int i = f; i <= r; i++) {
+                    System.out.print(arr[i] + " ");
+                }
+                System.out.println();
+            }
+        }
+        public int size()
+        {
+            return size;
+        }
+    }
+
+    public static void main(String[] args) {
+        Que que = new Que();
+        que.add(1);
+        que.add(2);
+        que.add(3);
+        que.add(4);
+        que.add(5);
+        que.display();
+        que.remove();
+        que.display();
+        que.remove();
+        que.display();
+        System.out.println(que.peek());
+        System.out.println(que.size());
+        System.out.println(que.isEmpty());
+    }
+}
+
+
+Output
+
+1 2 3 4 5 
+2 3 4 5 
+3 4 5 
+3
+3
+false
+```
