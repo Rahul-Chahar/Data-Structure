@@ -288,3 +288,103 @@ Output
 3
 false
 ```
+
+### Q2-> LinkedList implementation of queue
+```
+package Queue;
+
+public class linkedlist_implementation_queue {
+    public static class Node
+    {
+        int data;
+        Node next;
+        Node(int val)
+        {
+            data = val;
+            next = null;
+        }
+    }
+    public static class queueLL
+    {
+        Node head = null;
+        Node tail = null;
+        int size = 0;
+        public void add(int x)
+        {
+            Node temp = new Node(x);
+            if(size == 0)
+            {
+                head = tail = temp;
+            }
+            else
+            {
+                tail.next = temp;
+                tail = temp;
+            }
+            size++;
+        }
+        public int peek()
+        {
+            if(size == 0) {
+                System.out.println("Queue is empty");
+                return -1;
+            }
+            return head.data;
+        }
+        public int remove()
+        {
+            if(size == 0)
+            {
+                System.out.println("Queue is empty");
+                return -1;
+            }
+            int val = head.data;
+            head = head.next;
+            size--;
+            return val;
+        }
+        public boolean isEmpty()
+        {
+            if(size == 0)
+                return true;
+            return false;
+        }
+        public int size()
+        {
+            return size;
+        }
+        public void display()
+        {
+            Node temp = head;
+            while(temp != null)
+            {
+                System.out.print(temp.data + " ");
+                temp = temp.next;
+            }
+            System.out.println();
+        }
+    }
+    public static void main(String[] args) {
+        queueLL que = new queueLL();
+        que.add(1);
+        que.add(2);
+        que.add(3);
+        que.add(4);
+        que.add(5);
+        que.display();
+        System.out.println(que.peek());
+        System.out.println(que.remove());
+        System.out.println(que.isEmpty());
+        System.out.println(que.size());
+        que.display();
+    }
+}
+
+Output
+1 2 3 4 5 
+1
+1
+false
+4
+2 3 4 5
+```
