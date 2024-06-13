@@ -388,4 +388,147 @@ false
 4
 2 3 4 5
 ```
-...
+### Introduction to Deque
+```
+package Queue.Introduction_Deque;
+
+public class deque {
+    static class Node
+    {
+        int data;
+        Node prev, next;
+
+        Node(int data)
+        {
+            this.data = data;
+            prev = next = null;
+        }
+    }
+    static class Deque
+    {
+        Node front, rear;
+        int size;
+
+        Deque()
+        {
+            front = rear = null;
+            size = 0;
+        }
+
+    boolean isEmpty()
+    {
+        if(size == 0)
+            return true;
+        return false;
+    }
+    int size()
+    {
+        return size;
+    }
+    void insertFront(int data)
+    {
+    Node newNode = new Node(data);
+    if (front == null) {
+        // deque is empty
+        rear = front = newNode;
+    }
+    else {
+        newNode.next = front;
+        front.prev = newNode;
+        front = newNode;
+    }
+    size++;
+    }
+    void insertRear(int data)
+    {
+        Node newNode = new Node(data);
+        if (rear == null) {
+            // deque is empty
+            front = rear = newNode;
+        }
+        else {
+            newNode.prev = rear;
+            rear.next = newNode;
+            rear = newNode;
+        }
+        size++;
+    }
+    void deleteFront()
+    {
+    // check for underflow
+        if(size == 0)
+        {
+            System.out.println("Underflow");
+        }
+        else
+        {
+            Node temp = front;
+            front = front.next;
+
+            if (front == null)
+                rear = null;
+            else
+                front.prev = null;
+            size--;
+        }
+    }
+    void deleteRear()
+    {
+        // check for underflow
+        if(size == 0)
+        {
+            System.out.println("Underflow");
+        }
+        else
+        {
+            Node temp = rear;
+            rear = rear.prev;
+
+            if (rear == null)
+                front = null;
+            else
+                rear.next = null;
+            size--;
+        }
+    }
+    int getFront()
+    {
+        if (size == 0) {
+            System.out.println("Underflow");
+            return -1;
+        }
+        return front.data;
+    }
+    int getRear()
+    {
+        if (size == 0) {
+            System.out.println("Underflow");
+            return -1;
+        }
+        return rear.data;
+    }
+    }
+
+    public static void main(String[] args) {
+        Deque dq = new Deque();
+        dq.insertFront(10);
+        dq.insertFront(20);
+        dq.insertRear(30);
+        dq.insertRear(40);
+        System.out.println("Front: " + dq.getFront());
+        System.out.println("Rear: " + dq.getRear());
+        dq.deleteFront();
+        System.out.println("Front: " + dq.getFront());
+        dq.deleteRear();
+        System.out.println("Rear: " + dq.getRear());
+    }
+}
+
+
+Output
+Front: 20
+Rear: 40
+Front: 10
+Rear: 30
+```
+
