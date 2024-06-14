@@ -653,3 +653,60 @@ Ouput
 30 40 50 60 
 30 40 50 60 70
 ```
+
+
+ ### Reverse first k elements of a Queue
+```
+package Queue;
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
+public class Reverse_irst_k_elements_Queue {
+    public Queue<Integer> modifyQueue(Queue<Integer> q, int k) {
+        // use an auxiliary stack
+        Stack<Integer> st = new Stack<>();
+        int n = q.size() - k;
+
+        // we pop first k elements from queue and push them into stack
+        while (k-- > 0) {
+            int a = q.peek();
+            q.poll();
+            st.push(a);
+        }
+
+        // while stack is not empty, push the elements back into queue
+        while (!st.isEmpty()) {
+            int a = st.peek();
+            st.pop();
+            q.add(a);
+        }
+
+        // now we remove the remaining elements from queue and push them back into queue
+        for (int i = 0; i < n; i++) {
+            int a = q.peek();
+            q.poll();
+            q.add(a);
+        }
+
+        return q;
+    }
+
+    public static void main(String[] args) {
+        Reverse_irst_k_elements_Queue rev = new Reverse_irst_k_elements_Queue();
+        Queue<Integer> q = new LinkedList<>();
+        q.add(10);
+        q.add(20);
+        q.add(30);
+        q.add(40);
+        q.add(50);
+        Queue<Integer> newq = rev.modifyQueue(q, 3);
+        System.out.println(newq);
+    }
+}
+
+
+Output
+[30, 20, 10, 40, 50]
+```
