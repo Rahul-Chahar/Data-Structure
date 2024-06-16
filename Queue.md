@@ -710,4 +710,5 @@ public class Reverse_irst_k_elements_Queue {
 Output
 [30, 20, 10, 40, 50]
 ```
-...
+
+
