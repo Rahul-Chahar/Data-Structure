@@ -893,4 +893,63 @@ Output
 T.C = O(N)
 S.C = O(N)
 ```
+### Q-> Sliding Window Maximum
+```
+package Queue;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+public class sliding_window_Maximum {
+    public int[] maxSlidingWindow(int[] nums, int k){
+        if(nums == null || k <= 0){
+            return new int[0];
+        }
+
+        int n = nums.length;
+        int[] res = new int[n - k + 1];
+        int resi = 0;
+
+        // Store index of the maximum element in the window
+        Deque<Integer> q = new ArrayDeque<>();
+
+        for(int i = 0; i < n; i++){
+            // Remove elements out of the window
+            while(!q.isEmpty() && q.peek() < i - k + 1){
+                q.poll();
+            }
+
+            // Remove elements smaller than the current element
+            while(!q.isEmpty() && nums[q.peekLast()] < nums[i]){
+                q.pollLast();
+            }
+
+            // Add the current element
+            q.offer(i);
+
+            // Add the maximum element to the result
+            if(i >= k - 1){
+                res[resi++] = nums[q.peek()];
+            }
+        }
+        return res;
+    }
+
+    public static void main(String[] args) {
+        sliding_window_Maximum obj = new sliding_window_Maximum();
+        int[] nums = {1, 3, -1, -3, 5, 3, 6, 7};
+        int k = 3;
+        int[] res = obj.maxSlidingWindow(nums, k);
+        for(int i: res){
+            System.out.print(i + " ");
+        }
+    }
+}
+
+Output
+3 3 5 5 6 7 
+
+T.C = O(N)
+S.C = O(N)
+```
 
