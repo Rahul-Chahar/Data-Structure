@@ -710,5 +710,187 @@ public class Reverse_irst_k_elements_Queue {
 Output
 [30, 20, 10, 40, 50]
 ```
+### Q-> Implement Queue using Stack
+```
+package Queue;
 
+import java.util.Stack;
+
+public class implement_queue_using_stack {
+
+    class MyQueue {
+        Stack<Integer> input;
+        Stack<Integer> output;
+
+        public MyQueue() {
+            input = new Stack<>();
+            output = new Stack<>();
+        }
+        public void push(int x) {
+            input.push(x);
+        }
+        public int pop() {
+            peek();
+            return output.pop();
+        }
+        public int peek() {
+            if (output.isEmpty())
+            {
+                while (!input.isEmpty()) {
+                    output.push(input.pop());
+                }
+            }
+            return output.peek();
+        }
+        public boolean empty() {
+            return input.isEmpty() && output.isEmpty();
+        }
+    }
+
+    public static void main(String[] args) {
+        implement_queue_using_stack obj = new implement_queue_using_stack();
+        MyQueue obj1 = obj.new MyQueue();
+        obj1.push(1);
+        obj1.push(2);
+        obj1.push(3);
+        System.out.println(obj1.pop());
+        System.out.println(obj1.peek());
+        System.out.println(obj1.empty());
+    } 
+}
+
+
+T.C = O(1) for all operations
+S.C = O(N) for 2 stacks [input, output]
+```
+### Q-> First negative in each window of size K
+
+   ```
+package Queue;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class First_negative_each_window_size_K {
+
+    class Compute{
+        public long[] printFirstNegativeInteger(long A[], int N, int K)
+        {
+            Queue<Integer> q = new LinkedList<>();
+            long[] res = new long[N-K+1];
+
+            for(int i=0; i<K; i++){
+                if(A[i]<0){
+                    q.add(i);
+                }
+            }
+            for(int i = 0; i<N-K+1; i++)
+            {
+                if(q.size()!= 0 && q.peek() < i){
+                    q.remove();
+                }
+                if(q.size()!=0 && q.peek() <= i+K-1){
+                    res[i] = A[q.peek()];
+                }
+
+            }
+            return res;
+        }
+    }
+
+    public static void main(String[] args) {
+        First_negative_each_window_size_K obj = new First_negative_each_window_size_K();
+        Compute obj1 = obj.new Compute();
+        long[] A = {12, -1, -7, 8, -15, 30, 16, 28};
+        int N = 8;
+        int K = 3;
+        long[] res = obj1.printFirstNegativeInteger(A, N, K);
+        for(long i: res){
+            System.out.print(i + " ");
+        }
+    }
+}
+
+Output
+-1 -1 -7 0 0 0 
+
+T.C = O(N)
+S.C = O(N)
+```
+
+### Q-> Interleave the first half of the queue with the second half
+
+```
+package Queue;
+
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.Stack;
+
+public class reorder_Queue {
+    public static ArrayList<Integer> rearrangeQueue(int N, Queue<Integer> q) {
+        ArrayList<Integer> res = new ArrayList<>();
+        Stack<Integer> st = new Stack<>();
+
+        // Step 1: Push the first half of the queue into the stack
+        for(int i = 1; i <= N / 2; i++) {
+            st.push(q.remove());
+        }
+
+        // Step 2: Enqueue the stack elements back to the queue
+        while(!st.isEmpty()) {
+            q.add(st.pop());
+        }
+
+        // Step 3: Move the first half of the queue to the back of the queue
+        for(int i = 1; i <= N / 2; i++) {
+            q.add(q.remove());
+        }
+
+        // Step 4: Again, push the first half of the queue into the stack
+        for(int i = 1; i <= N / 2; i++) {
+            st.push(q.remove());
+        }
+
+        // Step 5: Interleave the elements from the stack and queue
+        while(!st.isEmpty()) {
+            q.add(st.pop());
+            q.add(q.remove());
+        }
+
+        // Collect the result
+        while(!q.isEmpty()) {
+            res.add(q.remove());
+        }
+
+        return res;
+    }
+
+    public static void main(String[] args) {
+        Queue<Integer> q = new java.util.LinkedList<>();
+        q.add(11);
+        q.add(12);
+        q.add(13);
+        q.add(14);
+        q.add(15);
+        q.add(16);
+        q.add(17);
+        q.add(18);
+        q.add(19);
+        q.add(20);
+
+        ArrayList<Integer> res = rearrangeQueue(10, q);
+
+        for(int i : res) {
+            System.out.print(i + " ");
+        }
+    }
+}
+
+Output
+11 16 12 17 13 18 14 19 15 20
+
+T.C = O(N)
+S.C = O(N)
+```
 
