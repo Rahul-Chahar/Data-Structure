@@ -188,4 +188,104 @@ public class middle_of_the_linkedList {
     }
 ```
 
+### Q-> Remove Nth Node from End of List
+```
+package LinkedList;
 
+public class remove_Nth_node_from_end_of_List {
+    class ListNode {
+        int val;
+        ListNode next;
+        
+        ListNode(int val) {
+            this.val = val;
+        }
+    }
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode slow = head;
+        ListNode fast = head;
+        
+        // Move fast pointer n steps ahead
+        for(int i = 1; i <= n; i++){
+            fast = fast.next;
+        }
+        if(fast == null){ // If fast is null, it means we have to remove the head node
+            return head.next;
+        }
+        
+        // Move slow and fast pointer simultaneously until fast reaches the end
+        while(fast.next != null){
+            slow = slow.next;
+            fast = fast.next;
+        }
+        slow.next = slow.next.next;
+        return head;
+    }
+    
+}
+```
+### Q->160 Intersection of two Linked Lists
+```
+package LinkedList;
+
+public class intersection_of_two_Linked_Lists {
+    class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int val) {
+            this.val = val;
+        }
+    }
+
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        int lenA = 0;
+        int lenB = 0;
+        ListNode tempA = headA;
+        ListNode tempB = headB;
+        while (tempA != null) {
+            lenA++;
+            tempA = tempA.next;
+        }
+        while (tempB != null) {
+            lenB++;
+            tempB = tempB.next;
+        }
+        tempA = headA;
+        tempB = headB;
+        if (lenA > lenB) {
+            int diff = lenA - lenB;
+            for (int i = 0; i < diff; i++) {
+                tempA = tempA.next;
+            }
+        } else {
+            int diff = lenB - lenA;
+            for (int i = 0; i < diff; i++) {
+                tempB = tempB.next;
+            }
+        }
+        while (tempA != tempB) {
+            tempA = tempA.next;
+            tempB = tempB.next;
+        }
+        return tempA;
+    }
+
+    public static void main(String[] args) {
+        intersection_of_two_Linked_Lists obj = new intersection_of_two_Linked_Lists();
+        ListNode headA = obj.new ListNode(4);
+        headA.next = obj.new ListNode(1);
+        headA.next.next = obj.new ListNode(8);
+        headA.next.next.next = obj.new ListNode(4);
+        headA.next.next.next.next = obj.new ListNode(5);
+
+        ListNode headB = obj.new ListNode(5);
+        headB.next = obj.new ListNode(0);
+        headB.next.next = obj.new ListNode(1);
+        headB.next.next.next = headA.next.next;
+
+        ListNode result = obj.getIntersectionNode(headA, headB);
+        System.out.println(result.val);
+    }
+}
+```
