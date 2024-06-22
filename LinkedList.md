@@ -130,4 +130,62 @@ public class delete_Node_LinkedList_237 {
     }
 }
 ```
-###
+### Q-> Middle of the LinkedList
+First Approach
+```
+package LinkedList;
+
+public class middle_of_the_linkedList {
+    class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int val) {
+            this.val = val;
+        }
+    }
+    public ListNode middleNode(ListNode head){
+     ListNode temp = head;
+     int len = 0;
+        while(temp != null){
+            len++;
+            temp = temp.next;
+        }
+        int mid = len/2+1;
+        temp = head;
+        for(int i = 1; i <= mid-1; i++){
+            temp = temp.next;
+        }
+        return temp;
+    }
+
+    public static void main(String[] args) {
+        middle_of_the_linkedList obj = new middle_of_the_linkedList();
+        ListNode head = obj.new ListNode(1);
+        head.next = obj.new ListNode(2);
+        head.next.next = obj.new ListNode(3);
+        head.next.next.next = obj.new ListNode(4);
+        head.next.next.next.next = obj.new ListNode(5);
+        head.next.next.next.next.next = obj.new ListNode(6);
+        head.next.next.next.next.next.next = obj.new ListNode(7);
+        head.next.next.next.next.next.next.next = obj.new ListNode(8);
+        head.next.next.next.next.next.next.next.next = obj.new ListNode(9);
+        head.next.next.next.next.next.next.next.next.next = obj.new ListNode(10);
+        System.out.println(obj.middleNode(head).val);
+    }
+}
+```
+2nd Approach
+```
+  public ListNode middleNode(ListNode head) {
+            ListNode slow = head;
+            ListNode fast = head;
+            while(fast != null && fast.next != null){
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            return slow;
+    }
+```
+
+
