@@ -289,3 +289,194 @@ public class intersection_of_two_Linked_Lists {
     }
 }
 ```
+
+### Linked List Cycle
+***Isme bas joh fast hai ouse double speed se bhadana hai jise agar cycle hai toh fast ghum kar waapas slow ke pass pouch jaaye agr aisa hua toh cycle hai***
+```
+package LinkedList;
+
+public class linkedList_cycle {
+    class ListNode{
+        int val;
+        ListNode next;
+        
+        ListNode(int val){
+            this.val = val;
+        }
+    }
+    public boolean hasCycle(ListNode head){
+        ListNode slow = head;
+        ListNode fast = head;
+        
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow == fast) return true;
+        }
+        return false;
+    }
+}
+```
+
+### Linked List Cycle II
+***Isme sabe phele toh wahi same logic lagygye linked list cycle found karne waala ouske baad ham jab hame pata chal jaayega ki cycle hai toh ham ek naya variable create karegye temp naam ka joh ki head se start houga or temp or slow ek ek karke aagye bhadegye or jaha bhi dono mil jaaygye wahi se cycle start hui hai***
+
+```
+package LinkedList;
+
+public class linkedList_cycle_II {
+    class ListNode{
+        int val;
+        ListNode next;
+
+        ListNode(int val){
+            this.val = val;
+        }
+    }
+    public ListNode detectCycle(ListNode head){
+        if(head == null || head.next == null) return null;
+        
+        ListNode slow = head;
+        ListNode fast = head;
+        
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow == fast) break;
+        }
+        if(fast != slow) return null;
+        
+        ListNode temp = head;
+        while(temp != slow){
+            temp = temp.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
+}
+```
+
+### 83 Remove Duplicates from sorted list
+***Isme a or b dou node legye b koh aagye bhadate jaaygye or ouski value compare karte jaygye a ki value se agar same hai toh b koh aage bhadate jaaygye jaise hi alag value aaygi toh a.next koh b se connect kr degye magar list ka joh last element ouske liye alg se case lihkna houga ki a.next = null ke***
+
+```
+package LinkedList;
+
+public class remove_Duplicates_from_sorted_list {
+    class Node{
+        int val;
+        Node next;
+
+        Node(int val){
+            this.val = val;
+        }
+    }
+    public Node deleteDuplicates(Node head){
+        if(head == null || head.next == null) return head;
+
+        Node a = head;
+        Node b = head;
+
+        while(b != null){
+            if(b.val == a.val){
+                b = b.next;
+            }
+            else {
+                a.next = b;
+                a = b;
+            }
+        }
+        a.next = null;
+        return head;
+    }
+}
+```
+### 61 Rotate List
+```
+package LinkedList;
+
+public class rotate_list {
+    class ListNode{
+        int val;
+        ListNode next;
+
+        ListNode(int val){
+            this.val = val;
+        }
+    }
+    public ListNode rotateRight(ListNode head, int k){
+        if(head == null || head.next == null) return head;
+
+        ListNode temp = head;
+        int length = 0;
+
+        while(temp != null){
+            temp = temp.next;
+            length++;
+        }
+        k%=length; // if k is greater than length, we need to take the modulo
+
+        if(k == 0) return head;
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        for(int i = 0; i< k; i++){ 
+            fast = fast.next;
+        }
+
+        while(fast.next != null){ // fast.next because we need to stop at the last element
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        ListNode newHead = slow.next; // newHead is the new head of the list
+        slow.next = null; // slow is the last element of the list
+        fast.next = head; // fast is the last element of the list
+
+        return newHead;
+    }
+}
+```
+### Merge 2 Sorted Lists
+```
+package LinkedList;
+
+public class merge_2_sorted_lists {
+    class ListNode{
+        int val;
+        ListNode next;
+
+        ListNode(int val){
+            this.val = val;
+        }
+    }
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2){
+        ListNode dummy = new ListNode(0);
+        ListNode temp = dummy;
+        ListNode temp1 = l1;
+        ListNode temp2 = l2;
+
+        while(temp1 != null && temp2 != null){
+            if(temp1.val <= temp2.val){
+                temp.next = temp1;
+                temp1 = temp1.next;
+               // temp = temp.next;
+            }
+            else {
+                temp.next = temp2;
+                temp2 = temp2.next;
+               // temp = temp.next;
+            }
+            temp = temp.next;
+        }
+        if(temp1 == null){
+            temp.next = temp2;
+        }
+        else {
+            temp.next = temp1;
+        }
+        return dummy.next;
+    }
+}
+```
