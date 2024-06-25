@@ -480,3 +480,154 @@ public class merge_2_sorted_lists {
     }
 }
 ```
+### Sort List 148 
+```
+package LinkedList;
+
+public class sort_List_148 {
+    class ListNode{
+        int val;
+        ListNode next;
+
+        ListNode(int val){
+            this.val = val;
+        }
+    }
+    public ListNode merge(ListNode l1, ListNode l2){
+        ListNode dummy = new ListNode(0);
+        ListNode temp1 = l1;
+        ListNode temp2 = l2;
+
+        while(temp1 != null && temp2 != null){
+            if(temp1.val <= temp2.val){
+                dummy.next = temp1;
+                temp1 = temp1.next;
+            }
+            else {
+                dummy.next = temp2;
+                temp2 = temp2.next;
+            }
+            dummy = dummy.next;
+        }
+        if(temp1 == null){
+            dummy.next = temp2;
+        }
+        else {
+            dummy.next = temp1;
+        }
+        return dummy.next;
+    }
+    public ListNode sortList(ListNode head){
+        if(head == null || head.next == null) return head;
+        
+        ListNode firstHalf = head;
+        ListNode slow = head;
+        ListNode fast = head;
+        
+        while(fast.next != null && fast.next.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        ListNode secondHalf = slow.next;
+        slow.next = null;
+        firstHalf = sortList(firstHalf);
+        secondHalf = sortList(secondHalf);
+        ListNode newHead = merge(firstHalf, secondHalf);
+        return newHead;
+    }
+}
+```
+
+### Partition List
+```
+package LinkedList;
+
+public class partition_List_86 {
+    class ListNode{
+        int val;
+        ListNode next;
+
+        ListNode(int val){
+            this.val = val;
+        }
+    }
+    public ListNode partition(ListNode head, int x){
+        ListNode dummy1 = new ListNode(0);
+        ListNode dummy2 = new ListNode(0);
+
+        ListNode curr1 = dummy1;
+        ListNode curr2 = dummy2;
+
+        ListNode curr = head;
+
+        while(curr != null){
+            if(curr.val < x){
+                curr1.next = curr;
+                curr1 = curr1.next;
+            }
+            else {
+                curr2.next = curr;
+                curr2 = curr2.next;
+            }
+            curr = curr.next;
+        }
+        curr2.next = null;
+
+        dummy1 = dummy1.next;
+        dummy2 = dummy2.next;
+        
+        curr1.next = dummy2.next;
+        
+        return dummy1.next;
+
+    }
+}
+```
+
+### Reverse Linked List (206)
+* Iterative Method
+
+```
+package LinkedList;
+
+public class reverse_Linked_List_206 {
+    class ListNode{
+        int val;
+        ListNode next;
+
+        ListNode(int val){
+            this.val = val;
+        }
+    }
+    public ListNode reverseList(ListNode head){
+        ListNode curr = head;
+        ListNode prev = null;
+        ListNode Next = null;
+        
+        while(curr != null){
+            Next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = Next;
+        }
+        return prev;
+    }
+}
+```
+
+* 2nd Method (Recursive Solution)
+
+```
+public ListNode reverseList(ListNode head){
+        if(head == null || head.next == null) return head;
+
+        ListNode a = head.next;
+        ListNode newHead = reverseList(a);
+        a.next = head;
+        head.next = null;
+        return newHead;
+    }
+}
+```
+
