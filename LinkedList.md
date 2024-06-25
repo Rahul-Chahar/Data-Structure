@@ -630,4 +630,52 @@ public ListNode reverseList(ListNode head){
     }
 }
 ```
+### 234 Palindrome Linked List
+##### Steps
+* Middle of LL
+* Reverse of LL
+* 2 pointer i,j
+```
+package LinkedList;
+
+public class palindrome_linkedList {
+    class ListNode{
+        int val;
+        ListNode next;
+
+        ListNode(int val){
+            this.val = val;
+        }
+    }
+    public ListNode reverseList(ListNode head){
+        if(head == null || head.next == null) return head;
+
+        ListNode a = head.next;
+        ListNode newHead = reverseList(a);
+        a.next = head;
+        head.next = null;
+        return newHead;
+    }
+    public boolean isPalindrome(ListNode head){
+        if(head == null || head.next == null) return true;
+        
+        ListNode slow = head;
+        ListNode fast = head;
+        
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        ListNode j = reverseList(slow);
+        ListNode i = head;
+        
+        while(j != null){
+            if(i.val != j.val) return false;
+            i = i.next;
+            j = j.next;
+        }
+        return true;
+    }
+}
+```
 
