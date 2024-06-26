@@ -678,4 +678,150 @@ public class palindrome_linkedList {
     }
 }
 ```
+### 92. Reverse Linked List II
+```
+package LinkedList;
+
+public class reverse_Linked_List_II_92 {
+    class ListNode{
+        int val;
+        ListNode next;
+
+        ListNode(int val){
+            this.val = val;
+        }
+    }
+    public void reverseList(ListNode head){
+        if(head == null || head.next == null) return;
+
+        ListNode prev = null;
+        ListNode curr = head;
+        ListNode Next = null;
+
+        while(curr != null){
+            Next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = Next;
+        }
+    }
+    public ListNode reverseBetween(ListNode head, int left, int right){
+        ListNode a = null, b = null, c = null, d = null;
+        int pos =1;
+        ListNode temp = head;
+        while(temp != null){
+            if(pos == left-1) a = temp;
+            if(pos == left) b = temp;
+            if(pos == right) c = temp;
+            if(pos == right+1) d = temp;
+            temp = temp.next;
+            pos++;
+        }
+        if(a != null) a.next = null;
+        if(c != null) c.next = null;
+
+        reverseList(b);
+
+        if(a != null) a.next = c;
+        b.next = d;
+        if(a != null) return c;
+        return head;   
+    }
+}
+
+T.C = O(N)
+S.C = O(1)
+
+```
+### Reorder List
+* Middle of LL
+* Reverse LL
+* Joining 2 LL
+
+```
+package LinkedList;
+
+public class reorder_List {
+    class ListNode{
+        int val;
+        ListNode next;
+
+        ListNode(int val){
+            this.val = val;
+        }
+    }
+    public ListNode middleNode(ListNode head){
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while(fast.next != null && fast.next.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+    public ListNode reverseList(ListNode head){
+        if(head == null || head.next == null) return head;
+
+        ListNode a = head.next;
+        ListNode newHead = reverseList(a);
+        a.next = head;
+        head.next = null;
+        return newHead;
+    }
+    public void reorderList(ListNode head){
+        ListNode leftMiddle = middleNode(head);
+        ListNode head2 = leftMiddle.next;
+        leftMiddle.next = null;
+        head2 = reverseList(head2);
+
+        ListNode dummy = new ListNode(0);
+        ListNode temp = dummy;
+
+        while(head != null || head2 != null){
+            temp.next = head;
+            head = head.next;
+            temp = temp.next;
+            temp.next = head2;
+            head2 = head2.next;
+            temp = temp.next;
+        }
+        if(head == null){
+            temp.next = head2;
+        }
+        if(head == null){
+            temp.next = head;
+        }
+        head = dummy.next;
+    }
+}
+```
+### 2. Add Two Numbers
+```
+   ListNode dummy = new ListNode(0);
+        ListNode temp = dummy;
+        int carry = 0;
+
+        while(l1 != null || l2 != null){
+            int val1 = 0, val2 = 0;
+            if(l1 != null) val1 = l1.val;
+            if(l2 != null) val2 = l2.val;
+            int num = val1 + val2 + carry;
+            ListNode node = new ListNode(num % 10);
+            temp.next = node;
+            temp = temp.next;
+            if(num > 9) carry = 1;
+            else carry = 0;
+            if(l1 != null) l1 = l1.next;
+            if(l2 != null) l2 = l2.next;
+        }
+        if(carry == 1){
+            ListNode node = new ListNode(1);
+            temp.next = node;
+            temp = temp.next;
+        }
+        return dummy.next;
+    }
+}
+```
 
