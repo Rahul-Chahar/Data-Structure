@@ -127,4 +127,70 @@ p -> pivot --> pivot largest element hi houga.
 
 11🕚
 11:11
+```
 
+## Find the first and last occurrence
+```
+class Solution {
+    public int[] element_search(int[] nums, int target) {
+        int low = 0;
+        int high = nums.length-1;
+        int arr[] = {-1,-1};
+
+        // first ocurrence
+        while(low<=high){
+            int mid = (low+high)/2;
+            if(nums[mid]==target){
+              arr[0] = mid;
+              high = mid-1;
+            }
+            else if(nums[mid]<target){
+                low = mid+1;
+            }
+            else high = mid-1;
+        }
+        low = 0;
+        high = nums.length-1;
+        while(low<=high){
+            int mid =(low+high)/2;
+            if(nums[mid]==target){
+               arr[1] = mid;
+               low = mid+1;
+            }
+            else if(nums[mid]<target){
+                low = mid+1;
+            }
+            else high = mid-1;
+        }
+        return arr;
+    }
+}
+```
+
+## Count the Zeros
+```
+class Solution {
+    public int countZeros(int[] nums) {
+        int low = 0;
+        int high = nums.length - 1;
+
+        // Binary search to find the first occurrence of 0
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (nums[mid] == 0) {
+                high = mid - 1;  // continue searching on the left side
+            } else {
+                low = mid + 1;  // move to the right side
+            }
+        }
+
+        // At this point, 'low' should be the index of the first 0
+        // If 'low' is out of bounds or the element at 'low' is not 0, return 0
+        if (low < nums.length && nums[low] == 0) {
+            return nums.length - low;
+        } else {
+            return 0;  // No 0s found in the array
+        }
+    }
+}
+```
